@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="description" content="Contact A.M. Alogo Situmorang - Full-Stack Developer" />
+    <meta name="theme-color" content="#050505" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>Contact | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="app" class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div class="content-container" style="max-width: 650px;">
+                <!-- Contact Hero -->
+                <div class="contact-hero">
+                    <div class="contact-hero-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h1 class="page-title">Let's Talk</h1>
+                    <p class="contact-subtitle">Have a project in mind or just want to say hello? I'd love to hear from
+                        you.</p>
+                </div>
+
+                <!-- Anti-scraping: Honeypot -->
+                <div class="hp-field" aria-hidden="true"
+                    style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;">
+                    <input type="email" name="email_hp" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="contact-links">
+                    <!-- Email -->
+                    <a href="#" class="contact-link" id="email-link" onclick="return false;" data-protected="true">
+                        <span class="contact-icon email-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </span>
+                        <span class="contact-info">
+                            <span class="contact-label">Email</span>
+                            <span class="contact-value" id="email-display">Click to reveal</span>
+                        </span>
+                        <span class="contact-arrow">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/AM4517UMOR4NG" target="_blank" rel="noopener noreferrer"
+                        class="contact-link">
+                        <span class="contact-icon github-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                        </span>
+                        <span class="contact-info">
+                            <span class="contact-label">GitHub</span>
+                            <span class="contact-value">AM4517UMOR4NG</span>
+                        </span>
+                        <span class="contact-arrow">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="#" class="contact-link" id="linkedin-link" onclick="return false;" data-protected="true">
+                        <span class="contact-icon linkedin-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </span>
+                        <span class="contact-info">
+                            <span class="contact-label">LinkedIn</span>
+                            <span class="contact-value" id="linkedin-display">Click to reveal</span>
+                        </span>
+                        <span class="contact-arrow">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </a>
+
+                    <!-- Discord -->
+                    <a href="#" class="contact-link" id="discord-link" onclick="return false;">
+                        <span class="contact-icon discord-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" />
+                            </svg>
+                        </span>
+                        <span class="contact-info">
+                            <span class="contact-label">Discord</span>
+                            <span class="contact-value" id="discord-display">Click to copy</span>
+                        </span>
+                        <span class="contact-arrow">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+
+                <p class="contact-note"></p>
+            </div>
+        </main>
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+    </div>
+
+    <!-- Anti-scraping JavaScript -->
+    <script>
+        (function () {
+            // Encoded contact data (Base64)
+            const _0x = {
+                e: 'YWVrbW9ob3BAZ21haWwuY29t', // email encoded
+                l: 'aHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2luL2EtbS1hbG9nby1zaXR1bW9yYW5nLTc1NTM3NzNhYg==', // linkedin encoded  
+                d: 'aHR0cHM6Ly9kaXNjb3JkLmNvbS91c2Vycy85MDc5NDA5NjYzMzIyMzU4Mjg=' // discord encoded
+            };
+
+            // Decode function with timing protection
+            const _d = (s) => {
+                try { return atob(s); } catch { return ''; }
+            };
+
+            // Anti-bot: Check for human interaction patterns
+            let _h = 0;
+            document.addEventListener('mousemove', () => _h++);
+            document.addEventListener('touchstart', () => _h++);
+
+            // Rate limiting
+            const _r = {};
+            const _rl = (k) => {
+                const n = Date.now();
+                if (_r[k] && n - _r[k] < 2000) return false;
+                _r[k] = n;
+                return true;
+            };
+
+            // Email handler
+            const eL = document.getElementById('email-link');
+            const eD = document.getElementById('email-display');
+            if (eL && eD) {
+                eL.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (_h < 3) return; // Require some mouse movement
+                    if (!_rl('e')) return;
+                    const em = _d(_0x.e);
+                    if (em) {
+                        eD.textContent = em;
+                        eL.href = 'mailto:' + em;
+                        eL.onclick = null;
+                    }
+                });
+            }
+
+            // LinkedIn handler
+            const lL = document.getElementById('linkedin-link');
+            const lD = document.getElementById('linkedin-display');
+            if (lL && lD) {
+                lL.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (_h < 3) return;
+                    if (!_rl('l')) return;
+                    const ln = _d(_0x.l);
+                    if (ln) {
+                        lD.textContent = 'A.M. Alogo Situmorang';
+                        lL.href = ln;
+                        lL.target = '_blank';
+                        lL.onclick = null;
+                        window.open(ln, '_blank');
+                    }
+                });
+            }
+
+            // Discord handler (open profile)
+            const dL = document.getElementById('discord-link');
+            const dD = document.getElementById('discord-display');
+            if (dL && dD) {
+                dL.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (_h < 3) return;
+                    if (!_rl('d')) return;
+                    const dc = _d(_0x.d);
+                    if (dc) {
+                        dD.textContent = 'Opening Discord...';
+                        dL.href = dc;
+                        dL.target = '_blank';
+                        dL.onclick = null;
+                        window.open(dc, '_blank');
+                    }
+                });
+            }
+
+            // Anti-devtools detection (basic)
+            const _c = () => {
+                const t = performance.now();
+                debugger;
+                if (performance.now() - t > 100) {
+                    console.log('%c⚠️ DevTools detected', 'color: orange; font-size: 20px;');
+                }
+            };
+
+            // Disable right-click on contact links
+            document.querySelectorAll('.contact-link[data-protected]').forEach(el => {
+                el.addEventListener('contextmenu', e => e.preventDefault());
+            });
+
+            // Disable text selection on protected elements
+            document.querySelectorAll('.contact-value').forEach(el => {
+                el.style.userSelect = 'none';
+                el.style.webkitUserSelect = 'none';
+            });
+        })();
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
