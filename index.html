@@ -3,9 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Professional Portfolio - Developer & Designer">
+    <meta name="theme-color" content="#050505">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
     <title>Portfolio | Welcome</title>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
         :root {
             --neon-cyan: #00f3ff;
@@ -33,46 +43,60 @@
             width: 100%;
             height: 100%;
             position: relative;
-            background: radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.03) 0%, transparent 40%);
+            overflow: hidden;
         }
 
         .container::before {
+            display: none;
+        }
+
+        .container::after {
             content: '';
             position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            top: 0;
+            left: 0;
+            width: 70px;
+            height: 70px;
+            background: var(--bg-dark);
+            z-index: 50;
             pointer-events: none;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-            /* Fade edges */
         }
 
-        .home-icon {
+        .explore-btn {
             position: absolute;
-            top: 20px;
-            left: 30px;
-            /* Centered: 50 - (40/2) */
-            width: 40px;
-            /* Increased from 30px */
-            height: 40px;
-            /* Increased from 30px */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 8px;
             cursor: pointer;
             z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 0 10px var(--neon-cyan));
+            font-family: inherit;
         }
 
-        .home-icon svg {
-            fill: var(--neon-cyan);
-            filter: drop-shadow(0 0 8px var(--neon-cyan));
+        .explore-btn:hover {
+            background: rgba(0, 243, 255, 0.1);
+            transform: translate(-50%, -50%) scale(1.05);
+            filter: drop-shadow(0 0 20px var(--neon-cyan));
         }
 
-        .home-icon:hover {
-            transform: scale(1.2) rotate(5deg);
+        .explore-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.8);
         }
 
         .flow-content {
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -84,6 +108,7 @@
         }
 
         .flow-content.active {
+            display: block;
             opacity: 1;
             pointer-events: auto;
         }
@@ -300,22 +325,74 @@
 
         .color-palette {
             position: absolute;
-            bottom: 40px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            background: rgba(10, 10, 15, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 15px 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(15px);
-            opacity: 0.9;
-            transition: opacity 0.5s ease;
+            gap: 8px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 12px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
             z-index: 200;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 243, 255, 0.1);
+        }
+
+        .color-palette:hover {
+            border-color: rgba(0, 243, 255, 0.5);
+        }
+
+        .mode-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 10px;
+            color: var(--neon-cyan);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 200;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 0 10px var(--neon-cyan));
+            user-select: none;
+        }
+
+        .mode-indicator:hover {
+            background: rgba(0, 243, 255, 0.15);
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px var(--neon-cyan));
+        }
+
+        .mode-indicator:active {
+            transform: scale(0.95);
+        }
+
+        .mode-indicator::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mode-indicator:hover::before {
+            opacity: 1;
+            animation: borderPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
         }
 
         .palette-label {
@@ -323,11 +400,6 @@
             letter-spacing: 2px;
             color: #888;
             font-weight: 700;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #333;
-            width: 100%;
-            text-align: center;
-            padding-bottom: 5px;
         }
 
         .palette-controls {
@@ -347,7 +419,6 @@
             font-size: 9px;
             color: #666;
             letter-spacing: 1px;
-            transition: color 0.3s;
         }
 
         .control-item:hover span {
@@ -358,40 +429,27 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s;
             border: 2px solid transparent;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Dot Colors */
-        .color-dot.red {
-            background: #ff0055;
-        }
-
-        .color-dot.yellow {
-            background: #ffcc00;
-        }
-
-        .color-dot.green {
-            background: #00ff99;
-        }
-
-        .color-dot.cyan {
-            background: #00f3ff;
-        }
+        .color-dot.red { background: #ff0055; }
+        .color-dot.yellow { background: #ffcc00; }
+        .color-dot.green { background: #00ff99; }
+        .color-dot.cyan { background: #00f3ff; }
 
         .control-item:hover .color-dot {
             transform: scale(1.3);
         }
 
-        /* INTRO ARROW ANIMATION - EPIC */
+        /* INTRO OVERLAY - ENHANCED */
         .intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -399,36 +457,95 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.8s ease;
-            background: radial-gradient(circle at center, rgba(0, 243, 255, 0.05) 0%, transparent 50%);
-        }
-
-        .intro-overlay::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 243, 255, 0.02) 2px, rgba(0, 243, 255, 0.02) 4px);
-            pointer-events: none;
-            animation: scanMove 8s linear infinite;
-        }
-
-        @keyframes scanMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100px); }
+            background: radial-gradient(ellipse at center, rgba(0, 243, 255, 0.12) 0%, rgba(5, 5, 5, 0.98) 70%);
+            overflow: hidden;
         }
 
         .intro-overlay.visible {
+            display: flex;
             opacity: 1;
         }
 
-        .intro-overlay.hidden {
-            opacity: 0;
+        /* Cyber Grid Background */
+        .intro-overlay::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridPan 25s linear infinite;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center center;
         }
 
+        .intro-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 243, 255, 0.015) 2px,
+                rgba(0, 243, 255, 0.015) 4px
+            );
+            animation: scanMove 3s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridPan {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
+        }
+
+        @keyframes scanMove {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* Main Content */
+        .intro-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+
+        /* Intro Text - Clean & Readable */
+        .intro-text {
+            font-size: clamp(14px, 3vw, 22px);
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
+            text-shadow: 0 0 20px var(--neon-cyan), 0 0 40px rgba(0, 243, 255, 0.5);
+            padding: 0 20px;
+            max-width: 90vw;
+            line-height: 1.6;
+        }
+
+        .intro-overlay.visible .intro-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Arrow Container */
         .intro-arrow-container {
             position: relative;
-            width: 70vw;
+            width: 85vw;
             max-width: 700px;
-            height: 120px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -437,122 +554,165 @@
         .intro-arrow-svg {
             width: 100%;
             height: 100%;
+            overflow: visible;
         }
 
         .intro-arrow-line {
             stroke: url(#introGradient);
-            stroke-width: 6;
+            stroke-width: 5;
             fill: none;
-            filter: drop-shadow(0 0 25px var(--neon-cyan)) drop-shadow(0 0 50px var(--neon-cyan));
-            stroke-dasharray: 600;
-            stroke-dashoffset: 600;
+            filter: drop-shadow(0 0 15px var(--neon-cyan)) drop-shadow(0 0 30px var(--neon-cyan));
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
             stroke-linecap: round;
-            transition: stroke-dashoffset 1.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .intro-overlay.visible .intro-arrow-line {
-            stroke-dashoffset: 0;
+            animation: drawArrow 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+        }
+
+        @keyframes drawArrow {
+            to { stroke-dashoffset: 0; }
         }
 
         .intro-arrow-head {
-            fill: var(--neon-pink);
-            filter: drop-shadow(0 0 25px var(--neon-pink)) drop-shadow(0 0 50px var(--neon-pink));
+            fill: var(--neon-cyan);
+            filter: drop-shadow(0 0 10px var(--neon-cyan)) drop-shadow(0 0 25px var(--neon-cyan));
             opacity: 0;
-            transform: translateX(-50px) scale(0.3);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1s;
+            transform: translateX(-20px) scale(0);
+            transform-origin: center;
         }
 
         .intro-overlay.visible .intro-arrow-head {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-            animation: arrowPulse 1s ease-in-out infinite alternate 2s;
+            animation: headAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.6s forwards,
+                       headPulse 1s ease-in-out 2.2s infinite alternate;
         }
 
-        @keyframes arrowPulse {
-            0% { filter: drop-shadow(0 0 25px var(--neon-pink)) drop-shadow(0 0 50px var(--neon-pink)); transform: scale(1); }
-            100% { filter: drop-shadow(0 0 40px var(--neon-pink)) drop-shadow(0 0 80px var(--neon-pink)); transform: scale(1.1); }
+        @keyframes headAppear {
+            to { opacity: 1; transform: translateX(0) scale(1); }
         }
 
-        .intro-text {
-            margin-bottom: 50px;
-            font-size: clamp(22px, 3.5vw, 32px);
-            font-weight: 700;
-            color: #fff;
-            text-align: center;
-            letter-spacing: 6px;
-            text-transform: uppercase;
+        @keyframes headPulse {
+            0% { filter: drop-shadow(0 0 10px var(--neon-cyan)) drop-shadow(0 0 25px var(--neon-cyan)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 20px var(--neon-cyan)) drop-shadow(0 0 40px var(--neon-cyan)); transform: scale(1.2); }
+        }
+
+        /* Energy Particles */
+        .arrow-particle {
+            fill: var(--neon-cyan);
             opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
-            text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan);
-            order: -1;
+            filter: drop-shadow(0 0 5px var(--neon-cyan));
         }
 
-        .intro-overlay.visible .intro-text {
-            opacity: 1;
-            transform: translateY(0);
+        .intro-overlay.visible .arrow-particle {
+            animation: particleMove 1.8s linear 0.6s infinite;
+        }
+        .intro-overlay.visible .arrow-particle:nth-child(2) { animation-delay: 1s; }
+        .intro-overlay.visible .arrow-particle:nth-child(3) { animation-delay: 1.4s; }
+
+        @keyframes particleMove {
+            0% { opacity: 0; transform: translateX(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(420px); }
         }
 
-        .intro-overlay.exit {
-            opacity: 0;
-            transform: scale(1.1);
-            transition: all 0.5s ease-out;
-        }
-
+        /* Pulse Rings */
         .intro-pulse {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--neon-cyan);
-            background: transparent;
-            border-radius: 50%;
-            left: 50%;
-            top: 45%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-        }
-
-        .intro-overlay.visible .intro-pulse {
-            opacity: 1;
-            animation: introPulse 2s cubic-bezier(0.19, 1, 0.22, 1) infinite;
-        }
-
-        .intro-pulse.p2 { animation-delay: 0.6s; border-color: var(--neon-pink); }
-        .intro-pulse.p3 { animation-delay: 1.2s; }
-
-        @keyframes introPulse {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(10); opacity: 0; }
-        }
-
-        .intro-corner {
             position: absolute;
             width: 80px;
             height: 80px;
             border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
             opacity: 0;
-            transition: all 0.8s ease 0.3s;
-            filter: drop-shadow(0 0 8px var(--neon-cyan));
         }
 
-        .intro-overlay.visible .intro-corner { opacity: 0.6; }
-        .intro-corner.tl { top: 12%; left: 12%; border-right: none; border-bottom: none; }
-        .intro-corner.tr { top: 12%; right: 12%; border-left: none; border-bottom: none; }
-        .intro-corner.bl { bottom: 12%; left: 12%; border-right: none; border-top: none; }
-        .intro-corner.br { bottom: 12%; right: 12%; border-left: none; border-top: none; }
+        .intro-overlay.visible .intro-pulse {
+            animation: ringPulse 2.5s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+        }
+
+        .intro-pulse.p2 { animation-delay: 0.7s !important; border-color: var(--neon-cyan); opacity: 0.7; }
+        .intro-pulse.p3 { animation-delay: 1.4s !important; }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.2); opacity: 1; }
+            100% { transform: scale(6); opacity: 0; }
+        }
+
+        /* Corner Decorations */
+        .intro-corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--neon-cyan);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 0 6px var(--neon-cyan));
+        }
+
+        .intro-corner.tl { top: 6%; left: 6%; border-right: none; border-bottom: none; transform: translate(-15px, -15px); }
+        .intro-corner.tr { top: 6%; right: 6%; border-left: none; border-bottom: none; transform: translate(15px, -15px); }
+        .intro-corner.bl { bottom: 6%; left: 6%; border-right: none; border-top: none; transform: translate(-15px, 15px); }
+        .intro-corner.br { bottom: 6%; right: 6%; border-left: none; border-top: none; transform: translate(15px, 15px); }
+
+        .intro-overlay.visible .intro-corner { opacity: 0.8; transform: translate(0, 0); }
+        .intro-overlay.visible .intro-corner.tl { transition-delay: 0.1s; }
+        .intro-overlay.visible .intro-corner.tr { transition-delay: 0.2s; }
+        .intro-overlay.visible .intro-corner.bl { transition-delay: 0.3s; }
+        .intro-overlay.visible .intro-corner.br { transition-delay: 0.4s; }
+
+        /* Floating Particles */
+        .float-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .intro-overlay.visible .float-particle {
+            animation: floatRise 3.5s ease-in-out infinite;
+        }
+
+        .float-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .float-particle:nth-child(2) { left: 25%; animation-delay: 0.4s; }
+        .float-particle:nth-child(3) { left: 40%; animation-delay: 0.8s; }
+        .float-particle:nth-child(4) { left: 55%; animation-delay: 1.2s; }
+        .float-particle:nth-child(5) { left: 70%; animation-delay: 1.6s; }
+        .float-particle:nth-child(6) { left: 85%; animation-delay: 2s; }
+
+        @keyframes floatRise {
+            0% { bottom: -5px; opacity: 0; transform: scale(0.5); }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { bottom: 105%; opacity: 0; transform: scale(1.2); }
+        }
+
+        /* Exit Animation */
+        .intro-overlay.exit {
+            opacity: 0;
+            transform: scale(1.08);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .intro-overlay.exit .intro-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="home-icon" id="homeIcon">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z" />
-            </svg>
-        </div>
+        <button class="explore-btn" id="exploreBtn">Click here to explore</button>
 
         <div class="flow-content" id="flowContent">
             <svg class="svg-layer" id="svgLayer"></svg>
+            <div class="mode-indicator" id="modeIndicator">CIRCUIT MODE</div>
 
             <div class="nav-label" id="label-projects"><a href="projects.html">Projects</a></div>
             <div class="nav-label" id="label-repos"><a href="repos.html">Repositories</a></div>
@@ -591,32 +751,47 @@
         <div class="intro-corner bl"></div>
         <div class="intro-corner br"></div>
         
-        <!-- Multiple Pulse Rings -->
+        <!-- Pulse Rings -->
         <div class="intro-pulse"></div>
         <div class="intro-pulse p2"></div>
         <div class="intro-pulse p3"></div>
+
+        <!-- Floating Particles -->
+        <div class="float-particle"></div>
+        <div class="float-particle"></div>
+        <div class="float-particle"></div>
+        <div class="float-particle"></div>
         
-        <div class="intro-arrow-container">
-            <svg class="intro-arrow-svg" viewBox="0 0 600 100" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                    <linearGradient id="introGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#00f3ff;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#00f3ff;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#ff0055;stop-opacity:1" />
-                    </linearGradient>
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                        <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <path class="intro-arrow-line" d="M 30 50 L 520 50" filter="url(#glow)"/>
-                            </svg>
-        </div>
-        <div class="intro-text">
-            <span>Click one of them to know more about me</span>
+        <!-- Main Content -->
+        <div class="intro-content">
+            <div class="intro-text">Click one of them to know more about me</div>
+            
+            <div class="intro-arrow-container">
+                <svg class="intro-arrow-svg" viewBox="0 0 500 60" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="introGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#00f3ff;stop-opacity:0.5" />
+                            <stop offset="50%" style="stop-color:#00f3ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00f3ff;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <!-- Energy Particles -->
+                    <circle class="arrow-particle" cx="30" cy="30" r="4"/>
+                    <circle class="arrow-particle" cx="30" cy="30" r="3"/>
+                    <circle class="arrow-particle" cx="30" cy="30" r="2"/>
+                    <!-- Main Line -->
+                    <path class="intro-arrow-line" d="M 30 30 L 430 30" filter="url(#glow)"/>
+                    <!-- Arrow Head -->
+                    <polygon class="intro-arrow-head" points="430,30 460,15 460,45" filter="url(#glow)"/>
+                </svg>
+            </div>
         </div>
     </div>
 
@@ -699,6 +874,120 @@
             transform: scaleX(1);
             pointer-events: auto;
         }
+
+        /* ========================================
+           MOBILE RESPONSIVE STYLES
+           ======================================== */
+        @media (max-width: 768px) {
+            .flow-content,
+            .explore-btn,
+            .intro-overlay,
+            #cursorCanvas {
+                display: none !important;
+            }
+
+            .mobile-menu {
+                display: flex !important;
+            }
+
+            .container::after {
+                display: none;
+            }
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-menu::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 243, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 0, 85, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .mobile-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mobile-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, var(--neon-cyan) 0%, #fff 50%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.5));
+        }
+
+        .mobile-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: var(--neon-cyan);
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .mobile-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mobile-card {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .mobile-card:active {
+            transform: scale(0.98);
+        }
+
+        .mobile-card.red:active { border-color: rgba(255, 0, 85, 0.4); background: rgba(255, 0, 85, 0.08); }
+        .mobile-card.yellow:active { border-color: rgba(255, 204, 0, 0.4); background: rgba(255, 204, 0, 0.08); }
+        .mobile-card.green:active { border-color: rgba(0, 255, 153, 0.4); background: rgba(0, 255, 153, 0.08); }
+        .mobile-card.cyan:active { border-color: rgba(0, 243, 255, 0.4); background: rgba(0, 243, 255, 0.08); }
+
+        .card-icon { font-size: 1.5rem; margin-right: 1rem; }
+        .card-text { flex: 1; font-size: 0.9rem; font-weight: 600; letter-spacing: 2px; }
+        .card-arrow { font-size: 1.2rem; opacity: 0.5; }
+
+        .mobile-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: #444;
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .mobile-nav-grid { grid-template-columns: repeat(2, 1fr); }
+            .mobile-card { flex-direction: column; text-align: center; padding: 1.5rem 1rem; }
+            .card-icon { margin-right: 0; margin-bottom: 0.75rem; font-size: 2rem; }
+        }
     </style>
 
     <script>
@@ -706,7 +995,7 @@
         const cursorCanvas = document.getElementById('cursorCanvas');
         const ctx = cursorCanvas.getContext('2d');
         let width, height;
-        let mouse = { x: 0, y: 0 };
+        let mouse = { x: -100, y: -100 };
         let trail = [];
         const TRAIL_LENGTH = 30;
 
@@ -782,7 +1071,7 @@
             });
         });
 
-        const homeIcon = document.getElementById('homeIcon');
+        const exploreBtn = document.getElementById('exploreBtn');
         const flowContent = document.getElementById('flowContent');
         const svgLayer = document.getElementById('svgLayer');
         const introOverlay = document.getElementById('introOverlay');
@@ -805,37 +1094,71 @@
             }, 4500);
         };
 
-        homeIcon.addEventListener('mouseenter', () => {
+        exploreBtn.addEventListener('click', () => {
             if (isActive) return;
             isActive = true;
+            exploreBtn.classList.add('hidden');
             introShown ? showDiagram() : (introShown = true, runIntro());
         });
 
         // Global state for current pattern
-        let currentPattern = 'circuit'; // circuit, direct, curve, glitch
+        let currentPattern = 'circuit';
+        const patterns = ['circuit', 'direct', 'curve', 'glitch'];
 
-        // Listen to control item clicks
-        document.querySelectorAll('.control-item').forEach((item, index) => {
-            item.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent sidebar interactions
-                const patterns = ['circuit', 'direct', 'curve', 'glitch'];
-                currentPattern = patterns[index] || 'circuit';
+        // Function to update visual state
+        function updatePatternVisuals(patternIndex) {
+            const modeIndicator = document.getElementById('modeIndicator');
+            if (modeIndicator) {
+                modeIndicator.textContent = patterns[patternIndex].toUpperCase() + ' MODE';
+            }
 
-                // Update active state visual
-                document.querySelectorAll('.control-item .color-dot').forEach(d => {
-                    d.style.transform = 'scale(1)';
-                    d.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-                });
-                document.querySelectorAll('.control-item span').forEach(s => s.style.color = '#666');
+            // Update palette label
+            const paletteLabel = document.querySelector('.palette-label');
+            if (paletteLabel) {
+                paletteLabel.textContent = patterns[patternIndex].toUpperCase();
+            }
 
-                const dot = item.querySelector('.color-dot');
-                const label = item.querySelector('span');
+            // Reset all dots
+            document.querySelectorAll('.control-item .color-dot').forEach(d => {
+                d.style.transform = 'scale(1)';
+                d.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+            });
+            document.querySelectorAll('.control-item span').forEach(s => s.style.color = '#666');
 
+            // Highlight active
+            const activeItem = document.querySelectorAll('.control-item')[patternIndex];
+            if (activeItem) {
+                const dot = activeItem.querySelector('.color-dot');
+                const label = activeItem.querySelector('span');
                 if (dot) {
                     dot.style.transform = 'scale(1.5)';
                     dot.style.boxShadow = '0 0 15px currentColor';
                 }
                 if (label) label.style.color = '#fff';
+            }
+        }
+
+        // Mode indicator click - cycle through patterns
+        document.getElementById('modeIndicator').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = patterns.indexOf(currentPattern);
+            const nextIndex = (currentIndex + 1) % patterns.length;
+            currentPattern = patterns[nextIndex];
+            
+            updatePatternVisuals(nextIndex);
+            
+            if (isActive) {
+                drawDiagram();
+            }
+        });
+
+        // Listen to control item clicks
+        document.querySelectorAll('.control-item').forEach((item, index) => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentPattern = patterns[index] || 'circuit';
+                
+                updatePatternVisuals(index);
 
                 if (isActive) {
                     drawDiagram();
@@ -848,22 +1171,22 @@
             const h = window.innerHeight;
 
             // X positions
-            const leftX = 50;
+            const leftX = 80;
             const diamondSize = 18;
 
             // Y positions are constant
             // Adjusted to leave space at bottom for Control Panel
-            const d1y = h * 0.10;
-            const d2y = h * 0.28;
-            const d3y = h * 0.46;
-            const d4y = h * 0.64;
+            const d1y = Math.max(h * 0.12, 120);
+            const d2y = Math.max(h * 0.30, d1y + 80);
+            const d3y = Math.max(h * 0.48, d2y + 80);
+            const d4y = Math.max(h * 0.66, d3y + 80);
 
             const rightX = w * 0.65;
 
-            const projY = h * 0.15;
-            const repoY = h * 0.33;
-            const contY = h * 0.51;
-            const abutY = h * 0.69;
+            const projY = Math.max(h * 0.17, d1y + 30);
+            const repoY = Math.max(h * 0.35, d2y + 30);
+            const contY = Math.max(h * 0.53, d3y + 30);
+            const abutY = Math.max(h * 0.71, d4y + 30);
 
             // Target X for the LINE (Arrow tip will be beyond this by ~10px)
             // Subtracting to account for refX=0 adjustment
@@ -994,7 +1317,7 @@
                 </defs>
 
                 <!-- Main Vertical Line -->
-                <line class="main-line" x1="${leftX}" y1="50" x2="${leftX}" y2="${h - 40}"/>
+                <line class="main-line" x1="${leftX}" y1="${d1y}" x2="${leftX}" y2="${h - 40}"/>
 
                 <!-- Circuit Nodes (Only if circuit pattern) -->
                 <g class="circuit-group">${nodesHTML}</g>
