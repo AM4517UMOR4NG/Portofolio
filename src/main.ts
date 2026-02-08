@@ -5,8 +5,9 @@ import { SettingsManager } from './utils/SettingsManager';
 // Initialize Dynamic Sidebar
 initSidebar();
 
-// Settings Page Logic
-if (window.location.pathname.includes('settings.html')) {
+// Settings Page Logic - check for both /settings and /settings.html
+const isSettingsPage = window.location.pathname.includes('settings');
+if (isSettingsPage) {
     const settings = SettingsManager.getInstance();
 
     const themeToggle = document.getElementById('theme-toggle') as HTMLInputElement;
@@ -78,7 +79,9 @@ function initGlobalEffects() {
     });
 
     // 4. Inject Home Button on non-index pages
-    if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/') {
+    const path = window.location.pathname;
+    const isHomePage = path === '/' || path === '/index.html' || path.endsWith('/index.html');
+    if (!isHomePage) {
         const homeBtn = document.createElement('a');
         homeBtn.href = '/index.html';
         homeBtn.className = 'home-btn-global';

@@ -3,7 +3,13 @@ import { SettingsManager } from '../utils/SettingsManager';
 export function initSidebar() {
     const settings = SettingsManager.getInstance();
     const path = window.location.pathname;
-    const page = path.split("/").pop() || "index.html";
+    // Handle both /about and /about.html formats for clean URLs
+    let page = path.split("/").pop() || "index.html";
+    if (!page.includes('.html') && page !== '') {
+        page = page + '.html';
+    } else if (page === '' || path === '/') {
+        page = 'index.html';
+    }
     const isCollapsed = settings.state.sidebarCollapsed;
 
     // Render Sidebar HTML
