@@ -969,9 +969,8 @@
                     <circle class="arrow-particle" cx="30" cy="30" r="3" />
                     <circle class="arrow-particle" cx="30" cy="30" r="2" />
                     <!-- Main Line -->
-                    <path class="intro-arrow-line" d="M 30 30 L 430 30" filter="url(#glow)" />
-                    <!-- Arrow Head -->
-                    <polygon class="intro-arrow-head" points="430,30 460,15 460,45" filter="url(#glow)" />
+                    <path class="intro-arrow-line" d="M 30 30 L 460 30" filter="url(#glow)" />
+                    <!-- Arrow Head REMOVED as requested -->
                 </svg>
             </div>
         </div>
@@ -1062,21 +1061,105 @@
            ======================================== */
         @media (max-width: 768px) {
 
+            /* Enable Desktop Elements on Mobile */
             .flow-content,
             .explore-btn,
             .intro-overlay,
-            #cursorCanvas {
+            #cursorCanvas,
+            #svgLayer,
+            .nav-label,
+            .color-palette,
+            .mode-indicator {
+                display: block !important;
+            }
+
+            /* Intro Text Refinement */
+            .intro-text {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+            }
+
+            .intro-text h2 {
+                font-size: 16px !important;
+                /* Slightly bigger for readability */
+                line-height: 1.6 !important;
+                white-space: normal !important;
+                max-width: 85% !important;
+                margin: 0 auto 25px auto !important;
+                letter-spacing: 2px !important;
+                text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+                /* Add glow back */
+            }
+
+            /* Intro Arrow Mobile Fixes */
+            .intro-arrow-svg {
+                width: 100% !important;
+                /* Ensure it spans width */
+                max-width: 300px !important;
+                /* Cap width to prevent cutoff */
+                height: 40px !important;
+                display: block !important;
+                margin: 0 auto !important;
+                overflow: visible !important;
+            }
+
+            .intro-arrow-line {
+                stroke-width: 3px !important;
+                /* Thicker line for mobile visibility */
+                stroke: #00f3ff !important;
+                opacity: 1 !important;
+            }
+
+            .intro-arrow-head {
+                fill: #00f3ff !important;
+            }
+
+            /* Adjust particles */
+            .arrow-particle {
+                fill: #00f3ff !important;
+            }
+
+            /* Fix Brackets/Decorations if they exist (assuming svgLayer or borders) */
+            /* Force center the intro overlay container */
+            .intro-overlay {
+                padding-top: 0 !important;
+                top: 20% !important;
+                /* Move up slightly */
+                left: 0 !important;
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+
+            /* Ensure labels don't touch the edge */
+            text {
+                font-family: 'Outfit', sans-serif;
+                letter-spacing: 1px;
+            }
+
+            /* Hide list-style mobile menu */
+            .mobile-menu {
                 display: none !important;
             }
 
-            .mobile-menu {
-                display: flex !important;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 9999;
+            /* Adjust Explore Button for Mobile */
+            .explore-btn {
+                padding: 15px 30px;
+                font-size: 14px;
+                width: 70%;
+                text-align: center;
+                white-space: nowrap;
+            }
+
+            /* Adjust Intro Text */
+            .intro-text {
+                font-size: 16px;
+                padding: 0 10px;
             }
 
             .container::after {
@@ -1402,24 +1485,51 @@
         function drawDiagram() {
             const w = window.innerWidth;
             const h = window.innerHeight;
+            const isMobile = w <= 768;
 
-            // X positions
-            const leftX = 80;
-            const diamondSize = 18;
+            // Responsive Layout Config
+            let leftX, rightX, laneStart, laneGap;
 
-            // Y positions are constant
-            // Adjusted to leave space at bottom for Control Panel
-            const d1y = Math.max(h * 0.12, 120);
-            const d2y = Math.max(h * 0.30, d1y + 80);
-            const d3y = Math.max(h * 0.48, d2y + 80);
-            const d4y = Math.max(h * 0.66, d3y + 80);
+            if (isMobile) {
+                leftX = 20;
+                rightX = w - 150; // Increased spacing for label fit
+                laneStart = 30;
+                laneGap = (w - 60) / 4; // Distribute evenly
+            } else {
+                leftX = 80;
+                rightX = w * 0.65;
+                laneStart = 100; // Original
+                laneGap = 40; // Original
+            }
 
-            const rightX = w * 0.65;
+            const diamondSize = isMobile ? 12 : 18;
 
-            const projY = Math.max(h * 0.17, d1y + 30);
-            const repoY = Math.max(h * 0.35, d2y + 30);
-            const contY = Math.max(h * 0.53, d3y + 30);
-            const abutY = Math.max(h * 0.71, d4y + 30);
+            // Vertical Spacing Logic
+            // The bottom control panel is large (~180px). We need to clear it completely.
+
+            const topMargin = isMobile ? 100 : Math.max(h * 0.12, 120);
+            // Drastically increase bottom margin for mobile to avoid overlap
+            const bottomMargin = isMobile ? 250 : 100;
+
+            let availableHeight = h - topMargin - bottomMargin;
+
+            // If screen is really short, ensure minimum spacing but allow scroll if needed? 
+            // Better to compact.
+            if (isMobile && availableHeight < 250) {
+                availableHeight = 250; // Force minimum height
+            }
+
+            const itemStep = availableHeight / 3;
+
+            const d1y = topMargin;
+            const d2y = d1y + itemStep;
+            const d3y = d2y + itemStep;
+            const d4y = d3y + itemStep;
+
+            const projY = d1y + (isMobile ? 25 : 30);
+            const repoY = d2y + (isMobile ? 25 : 30);
+            const contY = d3y + (isMobile ? 25 : 30);
+            const abutY = d4y + (isMobile ? 25 : 30);
 
             // Target X for the LINE (Arrow tip will be beyond this by ~10px)
             // Subtracting to account for refX=0 adjustment
@@ -1432,6 +1542,15 @@
                 { x1: 340, x2: 420 },
                 { x1: 460, x2: 540 }
             ];
+
+            // If mobile, simplify lanes to avoid off-screen
+            if (isMobile) {
+                // Keep lanes very compact on the left
+                lanes[0] = { x1: leftX + 5, x2: leftX + 15 };
+                lanes[1] = { x1: leftX + 10, x2: leftX + 25 };
+                lanes[2] = { x1: leftX + 15, x2: leftX + 20 };
+                lanes[3] = { x1: leftX + 5, x2: leftX + 25 };
+            }
 
             // --- PATTERN GENERATORS ---
 
@@ -1562,7 +1681,8 @@
                 <path id="p3" class="branch-line" d="${path3}" marker-end="url(#arrow)" />
                 <path id="p4" class="branch-line" d="${path4}" marker-end="url(#arrow)" />
 
-                <!-- Diamonds (Groups) -->
+                <!-- Diamonds (Groups) - Hide on Mobile -->
+                ${!isMobile ? `
                 <g class="diamond-group" transform="translate(${leftX}, ${d1y}) rotate(45)">
                     <rect class="diamond-shape" x="${-diamondSize}" y="${-diamondSize}" width="${diamondSize * 2}" height="${diamondSize * 2}"/>
                     <circle class="diamond-center" cx="0" cy="0" r="4"/>
@@ -1579,6 +1699,7 @@
                     <rect class="diamond-shape" x="${-diamondSize}" y="${-diamondSize}" width="${diamondSize * 2}" height="${diamondSize * 2}"/>
                     <circle class="diamond-center" cx="0" cy="0" r="4"/>
                 </g>
+                ` : ''}
 
                 <!-- Flow Particles -->
                 <circle class="particle" r="3"><animateMotion dur="3s" repeatCount="indefinite" path="${path1}" keyTimes="0;1" keyPoints="0;1"/></circle>
@@ -1587,12 +1708,25 @@
                 <circle class="particle" r="3"><animateMotion dur="4.2s" repeatCount="indefinite" begin="0.2s" path="${path4}" keyTimes="0;1" keyPoints="0;1"/></circle>
             `;
 
-            // Position labels
-            const labelLeft = rightX + 25;
-            document.getElementById('label-projects').style.cssText = `top: ${projY - 20}px; left: ${labelLeft}px;`;
-            document.getElementById('label-repos').style.cssText = `top: ${repoY - 20}px; left: ${labelLeft}px;`;
-            document.getElementById('label-contact').style.cssText = `top: ${contY - 20}px; left: ${labelLeft}px;`;
-            document.getElementById('label-about').style.cssText = `top: ${abutY - 20}px; left: ${labelLeft}px;`;
+            // Position labels (DOM Elements)
+            // On mobile, keep them closer to the arrow but not touching
+            // Increased margin to 40px to absolutely prevent overlap (User "masih timpa")
+            const labelMargin = isMobile ? 40 : 25;
+            const labelLeft = endLineX + labelMargin;
+            const mobileScale = isMobile ? 'transform: scale(0.85); transform-origin: left;' : '';
+
+            // Helper to set style
+            const setLabelPos = (id, y) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.cssText = `top: ${y - (isMobile ? 15 : 20)}px; left: ${labelLeft}px; ${mobileScale}`;
+                }
+            };
+
+            setLabelPos('label-projects', projY);
+            setLabelPos('label-repos', repoY);
+            setLabelPos('label-contact', contY);
+            setLabelPos('label-about', abutY);
 
             // Hover interactions (JS for path lighting)
             setupHoverEffect('label-projects', 'p1');
