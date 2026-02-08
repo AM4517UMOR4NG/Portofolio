@@ -31,20 +31,12 @@
         }
 
         body {
-            min-height: 100vh;
+            height: 100vh;
             width: 100vw;
             background-color: var(--bg-dark);
             font-family: 'Outfit', 'Segoe UI', sans-serif;
             /* Cleaner font */
-            overflow-x: hidden;
-        }
-
-        /* Desktop: prevent scroll */
-        @media (min-width: 769px) {
-            body {
-                height: 100vh;
-                overflow: hidden;
-            }
+            overflow: hidden;
         }
 
         .container {
@@ -887,17 +879,19 @@
            MOBILE RESPONSIVE STYLES
            ======================================== */
         @media (max-width: 768px) {
-            .container,
             .flow-content,
             .explore-btn,
             .intro-overlay,
-            #cursorCanvas,
-            .page-transition-overlay {
+            #cursorCanvas {
                 display: none !important;
             }
 
             .mobile-menu {
                 display: flex !important;
+            }
+
+            .container::after {
+                display: none;
             }
         }
 
@@ -908,8 +902,7 @@
             padding: 2rem 1.5rem;
             background: var(--bg-dark);
             position: relative;
-            overflow: visible;
-            z-index: 100;
+            overflow: hidden;
         }
 
         .mobile-menu::before {
@@ -1000,22 +993,18 @@
     <script>
         // --- CURSOR TRAIL LOGIC ---
         const cursorCanvas = document.getElementById('cursorCanvas');
-        const ctx = cursorCanvas ? cursorCanvas.getContext('2d') : null;
+        const ctx = cursorCanvas.getContext('2d');
         let width, height;
         let mouse = { x: -100, y: -100 };
         let trail = [];
         const TRAIL_LENGTH = 30;
-        const isMobile = window.innerWidth <= 768;
 
         function resizeCanvas() {
-            if (!cursorCanvas) return;
             width = cursorCanvas.width = window.innerWidth;
             height = cursorCanvas.height = window.innerHeight;
         }
-        if (!isMobile && cursorCanvas) {
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
@@ -1023,7 +1012,6 @@
         });
 
         function animateCursor() {
-            if (!ctx) return;
             ctx.clearRect(0, 0, width, height);
 
             // Add point
@@ -1067,24 +1055,25 @@
         }
         animateCursor();
 
-        // --- PAGE TRANSITION LOGIC (Desktop only) ---
-        if (!isMobile) {
-            document.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = this.getAttribute('href');
+        // --- PAGE TRANSITION LOGIC ---
+        const isMobileDevice = window.innerWidth <= 768;
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                // Skip animation on mobile - allow direct navigation
+                if (isMobileDevice) return;
+                
+                e.preventDefault();
+                const target = this.getAttribute('href');
 
-                    // Trigger animation
-                    const overlay = document.querySelector('.page-transition-overlay');
-                    if (overlay) overlay.classList.add('active');
+                // Trigger animation
+                document.querySelector('.page-transition-overlay').classList.add('active');
 
-                    // Wait for animation then navigate
-                    setTimeout(() => {
-                        window.location.href = target;
-                    }, 800);
-                });
+                // Wait for animation then navigate
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 800); // 0.5s animation + 0.3s delay
             });
-        }
+        });
 
         const exploreBtn = document.getElementById('exploreBtn');
         const flowContent = document.getElementById('flowContent');
@@ -1109,14 +1098,12 @@
             }, 4500);
         };
 
-        if (exploreBtn) {
-            exploreBtn.addEventListener('click', () => {
-                if (isActive) return;
-                isActive = true;
-                exploreBtn.classList.add('hidden');
-                introShown ? showDiagram() : (introShown = true, runIntro());
-            });
-        }
+        exploreBtn.addEventListener('click', () => {
+            if (isActive) return;
+            isActive = true;
+            exploreBtn.classList.add('hidden');
+            introShown ? showDiagram() : (introShown = true, runIntro());
+        });
 
         // Global state for current pattern
         let currentPattern = 'circuit';
@@ -1156,21 +1143,18 @@
         }
 
         // Mode indicator click - cycle through patterns
-        const modeIndicatorEl = document.getElementById('modeIndicator');
-        if (modeIndicatorEl) {
-            modeIndicatorEl.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const currentIndex = patterns.indexOf(currentPattern);
-                const nextIndex = (currentIndex + 1) % patterns.length;
-                currentPattern = patterns[nextIndex];
-                
-                updatePatternVisuals(nextIndex);
-                
-                if (isActive) {
-                    drawDiagram();
-                }
-            });
-        }
+        document.getElementById('modeIndicator').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = patterns.indexOf(currentPattern);
+            const nextIndex = (currentIndex + 1) % patterns.length;
+            currentPattern = patterns[nextIndex];
+            
+            updatePatternVisuals(nextIndex);
+            
+            if (isActive) {
+                drawDiagram();
+            }
+        });
 
         // Listen to control item clicks
         document.querySelectorAll('.control-item').forEach((item, index) => {
