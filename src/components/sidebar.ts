@@ -12,9 +12,37 @@ export function initSidebar() {
     }
     const isCollapsed = settings.state.sidebarCollapsed;
 
+    // Mobile Navbar HTML
+    const mobileNavHTML = `
+    <div class="mobile-navbar">
+        <a href="index.html" class="mobile-nav-logo">Portfolio</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+        <div class="mobile-drawer-header">
+            <span>Menu</span>
+            <button class="mobile-drawer-close" id="mobile-drawer-close">✕</button>
+        </div>
+        <nav class="mobile-drawer-nav">
+            <a href="index.html" class="${page === 'index.html' ? 'active' : ''}">🏠 Home</a>
+            <a href="about.html" class="${page === 'about.html' ? 'active' : ''}">👤 About</a>
+            <a href="repos.html" class="${page === 'repos.html' ? 'active' : ''}">📁 Repositories</a>
+            <a href="projects.html" class="${page === 'projects.html' ? 'active' : ''}">📂 Projects</a>
+            <a href="games.html" class="${page === 'games.html' ? 'active' : ''}">🎮 Games</a>
+            <a href="notes.html" class="${page === 'notes.html' ? 'active' : ''}">📝 Notes</a>
+            <a href="contact.html" class="${page === 'contact.html' ? 'active' : ''}">💬 Contact</a>
+            <a href="settings.html" class="${page === 'settings.html' ? 'active' : ''}">⚙️ Settings</a>
+        </nav>
+    </div>
+    `;
+
     // Render Sidebar HTML
     // We add an ID to the toggle button for event listening
     const sidebarHTML = `
+    ${mobileNavHTML}
     <aside class="sidebar ${isCollapsed ? 'collapsed' : ''}">
         <div class="sidebar-header">
             <div class="logo-container">
@@ -70,6 +98,28 @@ export function initSidebar() {
 
         // Fetch GitHub repos
         fetchGitHubRepos();
+
+        // Mobile menu event listeners
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileDrawer = document.getElementById('mobile-nav-drawer');
+        const mobileOverlay = document.getElementById('mobile-nav-overlay');
+        const mobileClose = document.getElementById('mobile-drawer-close');
+
+        const openMobileMenu = () => {
+            mobileDrawer?.classList.add('open');
+            mobileOverlay?.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMobileMenu = () => {
+            mobileDrawer?.classList.remove('open');
+            mobileOverlay?.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        mobileMenuBtn?.addEventListener('click', openMobileMenu);
+        mobileClose?.addEventListener('click', closeMobileMenu);
+        mobileOverlay?.addEventListener('click', closeMobileMenu);
     }
 
 }
