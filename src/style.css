@@ -2963,8 +2963,8 @@ section {
     left: 0;
     right: 0;
     height: 56px;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-primary);
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--glass-border);
     padding: 0 1rem;
     align-items: center;
     justify-content: space-between;
@@ -2974,7 +2974,7 @@ section {
 .mobile-nav-logo {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-main);
     text-decoration: none;
     letter-spacing: 1px;
 }
@@ -2997,7 +2997,7 @@ section {
     display: block;
     width: 22px;
     height: 2px;
-    background: var(--text-primary);
+    background: var(--text-main);
     border-radius: 2px;
     transition: all 0.3s ease;
 }
@@ -3023,15 +3023,16 @@ section {
     right: -280px;
     width: 280px;
     height: 100vh;
-    background: var(--bg-primary);
+    background: var(--bg-dark);
     z-index: 1002;
     transition: right 0.3s ease;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 
 .mobile-nav-drawer.open {
     right: 0;
+    display: flex;
 }
 
 .mobile-drawer-header {
@@ -3039,9 +3040,9 @@ section {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-primary);
+    border-bottom: 1px solid var(--glass-border);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text-main);
 }
 
 .mobile-drawer-close {
@@ -3059,8 +3060,8 @@ section {
 }
 
 .mobile-drawer-close:hover {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+    background: var(--bg-surface);
+    color: var(--text-main);
 }
 
 .mobile-drawer-nav {
@@ -3076,7 +3077,7 @@ section {
     align-items: center;
     gap: 0.75rem;
     padding: 0.875rem 1rem;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     text-decoration: none;
     border-radius: 8px;
     font-size: 0.95rem;
@@ -3084,13 +3085,13 @@ section {
 }
 
 .mobile-drawer-nav a:hover {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+    background: var(--bg-surface);
+    color: var(--text-main);
 }
 
 .mobile-drawer-nav a.active {
-    background: var(--accent-subtle);
-    color: var(--accent-primary);
+    background: rgba(255, 95, 31, 0.1);
+    color: var(--color-primary);
     font-weight: 500;
 }
 
