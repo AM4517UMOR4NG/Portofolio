@@ -31,12 +31,20 @@
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
             background-color: var(--bg-dark);
             font-family: 'Outfit', 'Segoe UI', sans-serif;
             /* Cleaner font */
-            overflow: hidden;
+            overflow-x: hidden;
+        }
+
+        /* Desktop: prevent scroll */
+        @media (min-width: 769px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
         }
 
         .container {
@@ -879,19 +887,17 @@
            MOBILE RESPONSIVE STYLES
            ======================================== */
         @media (max-width: 768px) {
+            .container,
             .flow-content,
             .explore-btn,
             .intro-overlay,
-            #cursorCanvas {
+            #cursorCanvas,
+            .page-transition-overlay {
                 display: none !important;
             }
 
             .mobile-menu {
                 display: flex !important;
-            }
-
-            .container::after {
-                display: none;
             }
         }
 
@@ -902,7 +908,8 @@
             padding: 2rem 1.5rem;
             background: var(--bg-dark);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            z-index: 100;
         }
 
         .mobile-menu::before {
@@ -1060,21 +1067,24 @@
         }
         animateCursor();
 
-        // --- PAGE TRANSITION LOGIC ---
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = this.getAttribute('href');
+        // --- PAGE TRANSITION LOGIC (Desktop only) ---
+        if (!isMobile) {
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href');
 
-                // Trigger animation
-                document.querySelector('.page-transition-overlay').classList.add('active');
+                    // Trigger animation
+                    const overlay = document.querySelector('.page-transition-overlay');
+                    if (overlay) overlay.classList.add('active');
 
-                // Wait for animation then navigate
-                setTimeout(() => {
-                    window.location.href = target;
-                }, 800); // 0.5s animation + 0.3s delay
+                    // Wait for animation then navigate
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 800);
+                });
             });
-        });
+        }
 
         const exploreBtn = document.getElementById('exploreBtn');
         const flowContent = document.getElementById('flowContent');
