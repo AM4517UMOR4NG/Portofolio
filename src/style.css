@@ -3100,13 +3100,30 @@ section {
         display: flex;
     }
 
+    .app-layout {
+        flex-direction: column;
+    }
+
     main {
         padding-top: 56px !important;
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-height: calc(100vh - 56px);
     }
 
     .about-page,
     .page-content,
     .main-content {
         padding-top: 1rem !important;
+    }
+
+    body {
+        cursor: auto;
+        overflow-y: auto;
+    }
+
+    .cursor-dot,
+    .cursor-outline {
+        display: none !important;
     }
 }
