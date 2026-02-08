@@ -993,18 +993,22 @@
     <script>
         // --- CURSOR TRAIL LOGIC ---
         const cursorCanvas = document.getElementById('cursorCanvas');
-        const ctx = cursorCanvas.getContext('2d');
+        const ctx = cursorCanvas ? cursorCanvas.getContext('2d') : null;
         let width, height;
         let mouse = { x: -100, y: -100 };
         let trail = [];
         const TRAIL_LENGTH = 30;
+        const isMobile = window.innerWidth <= 768;
 
         function resizeCanvas() {
+            if (!cursorCanvas) return;
             width = cursorCanvas.width = window.innerWidth;
             height = cursorCanvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        if (!isMobile && cursorCanvas) {
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+        }
 
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
@@ -1012,6 +1016,7 @@
         });
 
         function animateCursor() {
+            if (!ctx) return;
             ctx.clearRect(0, 0, width, height);
 
             // Add point
@@ -1094,12 +1099,14 @@
             }, 4500);
         };
 
-        exploreBtn.addEventListener('click', () => {
-            if (isActive) return;
-            isActive = true;
-            exploreBtn.classList.add('hidden');
-            introShown ? showDiagram() : (introShown = true, runIntro());
-        });
+        if (exploreBtn) {
+            exploreBtn.addEventListener('click', () => {
+                if (isActive) return;
+                isActive = true;
+                exploreBtn.classList.add('hidden');
+                introShown ? showDiagram() : (introShown = true, runIntro());
+            });
+        }
 
         // Global state for current pattern
         let currentPattern = 'circuit';
@@ -1139,18 +1146,21 @@
         }
 
         // Mode indicator click - cycle through patterns
-        document.getElementById('modeIndicator').addEventListener('click', (e) => {
-            e.stopPropagation();
-            const currentIndex = patterns.indexOf(currentPattern);
-            const nextIndex = (currentIndex + 1) % patterns.length;
-            currentPattern = patterns[nextIndex];
-            
-            updatePatternVisuals(nextIndex);
-            
-            if (isActive) {
-                drawDiagram();
-            }
-        });
+        const modeIndicatorEl = document.getElementById('modeIndicator');
+        if (modeIndicatorEl) {
+            modeIndicatorEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const currentIndex = patterns.indexOf(currentPattern);
+                const nextIndex = (currentIndex + 1) % patterns.length;
+                currentPattern = patterns[nextIndex];
+                
+                updatePatternVisuals(nextIndex);
+                
+                if (isActive) {
+                    drawDiagram();
+                }
+            });
+        }
 
         // Listen to control item clicks
         document.querySelectorAll('.control-item').forEach((item, index) => {
