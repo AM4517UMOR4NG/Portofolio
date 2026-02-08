@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="description" content="Portfolio Settings - Customize your experience" />
+    <meta name="theme-color" content="#050505" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>Settings | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Toggle Switch - Local to Settings */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #21262d;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: #8b949e;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--color-primary, #ff5f1f);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content settings-page">
+            <div class="settings-container">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Customize your portfolio experience</p>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Dark Mode</h3>
+                        <p>Toggle between Light and Dark interface</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Collapsed Sidebar</h3>
+                        <p>Keep the sidebar minimized by default</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="sidebar-pref-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Animations</h3>
+                        <p>Enable smooth scroll and reveal effects</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="anim-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </main>
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
