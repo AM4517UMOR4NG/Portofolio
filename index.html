@@ -1067,19 +1067,31 @@
             .intro-overlay,
             #cursorCanvas,
             #svgLayer,
-            .nav-label,
-            .color-palette {
+            .nav-label {
                 display: block !important;
             }
 
             .mode-indicator {
                 display: block !important;
                 position: fixed !important;
-                top: 85px !important;
-                right: 20px !important;
+                top: 65px !important;
+                left: 20px !important;
+                right: auto !important;
                 z-index: 9990 !important;
                 transform: scale(0.9) !important;
-                transform-origin: top right !important;
+                transform-origin: top left !important;
+            }
+
+            .color-palette {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 10px !important;
+                padding: 15px 30px !important;
+                bottom: 20px !important;
+                width: 90% !important;
+                max-width: 350px !important;
             }
 
             /* Intro Text Refinement */
@@ -1516,7 +1528,8 @@
             // Vertical Spacing Logic
             // The bottom control panel is large (~180px). We need to clear it completely.
 
-            const topMargin = isMobile ? 100 : Math.max(h * 0.12, 120);
+            // Updated: Increase top margin on mobile to push content below the fixed mode button
+            const topMargin = isMobile ? 150 : Math.max(h * 0.12, 120);
             // Drastically increase bottom margin for mobile to avoid overlap
             // Updated: Increase desktop bottom margin to 200px to clear Control Panel (User "mode laptop tabrakan")
             const bottomMargin = isMobile ? 250 : 200;
@@ -1566,6 +1579,26 @@
 
             // 1. CIRCUIT (Tech Trace with Chamfers & Nodes)
             function getCircuitPath(sx, sy, lane, ey, ex) {
+                // Mobile: Simple L-shape with chamfer (Straight look)
+                if (isMobile) {
+                    const c = 8; // Smaller chamfer for mobile
+                    const turnX = sx + 15; // Turn shortly after start
+
+                    // Simple path: Start -> Right to TurnX -> Down to EY -> Right to End
+                    // M sx sy L turnX-c sy L turnX sy+c L turnX ey-c L turnX+c ey L ex ey
+
+                    let path = `M ${sx} ${sy} `;
+                    // First corner (Right -> Down)
+                    path += `L ${turnX - c} ${sy} L ${turnX} ${sy + c} `;
+                    // Vertical line down to ey
+                    // Second corner (Down -> Right)
+                    path += `L ${turnX} ${ey - c} L ${turnX + c} ${ey} `;
+                    // Final line to target
+                    path += `L ${ex} ${ey}`;
+                    return path;
+                }
+
+                // Desktop: Original Double-Step Logic
                 const midY = sy + (ey - sy) * 0.5;
                 const c = 15; // Chamfer size
 
