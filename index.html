@@ -1068,9 +1068,18 @@
             #cursorCanvas,
             #svgLayer,
             .nav-label,
-            .color-palette,
+            .color-palette {
+                display: block !important;
+            }
+
             .mode-indicator {
                 display: block !important;
+                position: fixed !important;
+                top: 85px !important;
+                right: 20px !important;
+                z-index: 9990 !important;
+                transform: scale(0.9) !important;
+                transform-origin: top right !important;
             }
 
             /* Intro Text Refinement */
@@ -1509,7 +1518,8 @@
 
             const topMargin = isMobile ? 100 : Math.max(h * 0.12, 120);
             // Drastically increase bottom margin for mobile to avoid overlap
-            const bottomMargin = isMobile ? 250 : 100;
+            // Updated: Increase desktop bottom margin to 200px to clear Control Panel (User "mode laptop tabrakan")
+            const bottomMargin = isMobile ? 250 : 200;
 
             let availableHeight = h - topMargin - bottomMargin;
 
