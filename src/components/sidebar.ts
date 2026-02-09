@@ -13,6 +13,13 @@ export function initSidebar() {
     const isCollapsed = settings.state.sidebarCollapsed;
 
     // Mobile Navbar HTML
+    const isHome = page === 'index.html';
+    const homeLabel = isHome ? 'Home' : 'Return';
+    // Bootstrap Icon: arrow-left
+    const homeIconPath = isHome
+        ? '<path d="M8.138.056c-.073-.09-.168-.155-.276-.196a.7.7 0 0 0-.724 0c-.108.041-.203.106-.276.196L.834 8.02A.724.724 0 0 0 1.5 9h1v5.25c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75V10.5h1v3.75c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75V9h1a.724.724 0 0 0 .666-.98L8.139.056Z"></path>'
+        : '<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>';
+
     const mobileNavHTML = `
     <div class="mobile-navbar" style="z-index: 99999;">
         <a href="index.html" class="mobile-nav-logo">Portfolio</a>
@@ -31,9 +38,9 @@ export function initSidebar() {
         <nav class="mobile-drawer-nav">
             <a href="index.html" class="${page === 'index.html' ? 'active' : ''}">
                 <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
-                    <path d="M8.138.056c-.073-.09-.168-.155-.276-.196a.7.7 0 0 0-.724 0c-.108.041-.203.106-.276.196L.834 8.02A.724.724 0 0 0 1.5 9h1v5.25c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75V10.5h1v3.75c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75V9h1a.724.724 0 0 0 .666-.98L8.139.056Z"></path>
+                    ${homeIconPath}
                 </svg>
-                Home
+                ${homeLabel}
             </a>
             <a href="about.html" class="${page === 'about.html' ? 'active' : ''}">
                 <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
@@ -98,6 +105,7 @@ export function initSidebar() {
         </div>
         
         <nav class="sidebar-nav">
+             ${renderNavLink('index.html', 'Home', page)}
              ${renderNavLink('about.html', 'About', page)}
              ${renderNavLink('repos.html', 'Repositories', page)}
              ${renderNavLink('games.html', 'Games', page)}
@@ -167,12 +175,22 @@ export function initSidebar() {
 }
 
 function renderNavLink(href: string, label: string, currentPage: string) {
+    let displayLabel = label;
+    let iconKey = label;
+
+    // Handle distinct Return button for Home link on non-home pages
+    if (label === 'Home' && currentPage !== 'index.html') {
+        displayLabel = 'Return';
+        iconKey = 'Return';
+    }
+
     const isActive = currentPage === href || (href === 'index.html' && currentPage === '');
     const activeClass = isActive ? 'active' : '';
 
     // Map icons (simplified for brevity, normally separate map)
     const icons: Record<string, string> = {
         'Home': '<path d="M8.138.056c-.073-.09-.168-.155-.276-.196a.7.7 0 0 0-.724 0c-.108.041-.203.106-.276.196L.834 8.02A.724.724 0 0 0 1.5 9h1v5.25c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75V10.5h1v3.75c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75V9h1a.724.724 0 0 0 .666-.98L8.139.056Z"></path>',
+        'Return': '<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>',
         'About': '<path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm6.5 2.75A.75.75 0 1 1 8 12a.75.75 0 0 1 0-1.5ZM7 4.25a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0v-4Z"></path>',
         'Repositories': '<path d="M4.536 2.308a3.75 3.75 0 0 1 6.928 0 3.75 3.75 0 0 1 .15 7.425.75.75 0 0 1-1.494.133A2.25 2.25 0 0 0 9 7.75h-.75V10h1.75a.75.75 0 0 1 0 1.5H8.25v2.247a.75.75 0 0 1-1.5 0V11.5H5a.75.75 0 0 1 0-1.5h1.75V7.75h-.75a2.25 2.25 0 0 0-1.12 4.116.75.75 0 0 1-1.495-.133 3.75 3.75 0 0 1 .15-7.425ZM8 1.5a2.25 2.25 0 1 0 0 4.5A2.25 2.25 0 0 0 8 1.5Z"></path>',
         'Games': '<path d="M9.5 8.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"></path><path d="M2.5 5a2.5 2.5 0 0 1 2.5-2.5h6a2.5 2.5 0 0 1 2.5 2.5v1.25a.75.75 0 0 1-.75.75h-1 v3a2.5 2.5 0 0 1-2.5 2.5H7.5A2.5 2.5 0 0 1 5 10v-3H4.25a.75.75 0 0 1-.75-.75V5Z"></path>',
@@ -185,9 +203,9 @@ function renderNavLink(href: string, label: string, currentPage: string) {
     return `
     <a href="${href}" class="nav-item ${activeClass}">
         <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
-            ${icons[label] || ''}
+            ${icons[iconKey] || ''}
         </svg>
-        <span class="nav-label">${label}</span>
+        <span class="nav-label">${displayLabel}</span>
     </a>
     `;
 }
