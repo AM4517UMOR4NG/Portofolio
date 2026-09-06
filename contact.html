@@ -131,8 +131,6 @@
                 <p class="contact-note"></p>
             </div>
         </main>
-        <div class="cursor-dot"></div>
-        <div class="cursor-outline"></div>
     </div>
 
     <!-- Anti-scraping JavaScript -->
@@ -218,15 +216,6 @@
                     }
                 });
             }
-
-            // Anti-devtools detection (basic)
-            const _c = () => {
-                const t = performance.now();
-                debugger;
-                if (performance.now() - t > 100) {
-                    console.log('%c⚠️ DevTools detected', 'color: orange; font-size: 20px;');
-                }
-            };
 
             // Disable right-click on contact links
             document.querySelectorAll('.contact-link[data-protected]').forEach(el => {
