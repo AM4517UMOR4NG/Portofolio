@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f3ff" />
+      <stop offset="100%" stop-color="#ff0055" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background Shield -->
+  <rect width="90" height="90" x="5" y="5" rx="20" fill="#0b0f19" stroke="url(#cyberGrad)" stroke-width="3" />
+  <!-- Circuit Accent -->
+  <circle cx="22" cy="22" r="3" fill="#00f3ff" />
+  <line x1="22" y1="22" x2="35" y2="22" stroke="#00f3ff" stroke-width="2" />
+  <!-- Monogram Logo "A" (Alogo) -->
+  <path d="M 50 25 L 72 75 L 61 75 L 56 62 L 44 62 L 39 75 L 28 75 Z M 50 42 L 46 54 L 54 54 Z" fill="url(#cyberGrad)" filter="url(#glow)" />
+</svg>

@@ -214,28 +214,56 @@ async function fetchGitHubRepos() {
     const repoList = document.getElementById('github-repos');
     if (!repoList) return;
 
+    const CACHE_KEY = 'gh_pinned_repos_cache_v1';
+    const CACHE_TIME_KEY = 'gh_pinned_repos_time_v1';
+    const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+
+    const renderRepos = (repos: Array<{ name: string; html_url: string; stargazers_count: number }>) => {
+        repoList.innerHTML = repos.map(repo => `
+            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="repo-item">
+                <svg class="repo-icon" viewBox="0 0 16 16" fill="currentColor" width="14" height="14">
+                    <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                </svg>
+                <span class="repo-name">${repo.name}</span>
+            </a>
+        `).join('');
+    };
+
     try {
+        // Check cache first
+        const cached = sessionStorage.getItem(CACHE_KEY);
+        const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
+        if (cached && cachedTime && Date.now() - Number(cachedTime) < CACHE_TTL) {
+            renderRepos(JSON.parse(cached));
+            return;
+        }
+
         const response = await fetch('https://api.github.com/users/AM4517UMOR4NG/repos?per_page=100');
+        if (!response.ok) {
+            throw new Error(`GitHub API HTTP ${response.status}`);
+        }
         const repos = await response.json();
 
         if (Array.isArray(repos) && repos.length > 0) {
-            // Sort by stars (descending)
-            const sortedRepos = repos.sort((a: { stargazers_count: number }, b: { stargazers_count: number }) =>
-                b.stargazers_count - a.stargazers_count
-            ).slice(0, 5);
+            const sortedRepos = repos
+                .sort((a: { stargazers_count: number }, b: { stargazers_count: number }) =>
+                    b.stargazers_count - a.stargazers_count
+                )
+                .slice(0, 5);
 
-            repoList.innerHTML = sortedRepos.map((repo: { name: string; html_url: string; stargazers_count: number }) => `
-                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="repo-item">
-                    <svg class="repo-icon" viewBox="0 0 16 16" fill="currentColor" width="14" height="14">
-                        <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
-                    </svg>
-                    <span class="repo-name">${repo.name}</span>
-                </a>
-            `).join('');
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify(sortedRepos));
+            sessionStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
+            renderRepos(sortedRepos);
         } else {
             repoList.innerHTML = '<span class="repo-loading">No repos found</span>';
         }
     } catch (error) {
-        repoList.innerHTML = '<span class="repo-loading">Failed to load</span>';
+        // Use cached data on error (e.g. rate limit or offline)
+        const cached = sessionStorage.getItem(CACHE_KEY);
+        if (cached) {
+            renderRepos(JSON.parse(cached));
+        } else {
+            repoList.innerHTML = '<span class="repo-loading">Failed to load</span>';
+        }
     }
 }
