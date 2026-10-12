@@ -1,6 +1,6 @@
 # Alogo's portfolio
 
-Personal portfolio for A.M. Alogo Situmorang. A responsive editorial design with a charcoal and lime palette, original portrait, project illustrations, and the original red cursor trail.
+Personal portfolio for A.M. Alogo Situmorang. A responsive editorial design with a charcoal and lime palette, an illustrated robot avatar, project illustrations, and the original red cursor trail.
 
 ## Development
 
