@@ -32,3 +32,6 @@ npm-debug.log*
 
 .vercel/
 .qa/
+
+# Original personal photo must not be committed again
+src/Porto.jpeg
