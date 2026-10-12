@@ -1,76 +1,28 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Games | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A.M. Alogo Situmorang - full-stack developer. Explore projects, open-source code, and experiments with Java, Spring Boot, Laravel, and TypeScript."
+    />
+    <meta name="theme-color" content="#131413" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/src/styles/games.css">
-</head>
-
-<body>
-    <div id="app" class="app-layout">
-        <div id="sidebar-container"></div>
-        <main class="main-content">
-            <div class="content-container">
-                <h1 class="page-title">Playground</h1>
-                <p class="page-subtitle">Experimental games and interactive demos. Click to play!</p>
-
-                <div class="simple-grid">
-                    <div class="simple-card game-card" data-game="snake" style="cursor:pointer;">
-                        <div class="game-card-icon">&#127920;</div>
-                        <h3>Snake 2.0</h3>
-                        <p>Classic Snake with neon visuals. Use arrow keys or swipe to move.</p>
-                        <div class="tags">
-                            <span class="tag">Game</span>
-                            <span class="tag">JavaScript</span>
-                        </div>
-                    </div>
-
-                    <div class="simple-card game-card" data-game="tetris" style="cursor:pointer;">
-                        <div class="game-card-icon">&#129513;</div>
-                        <h3>Tetris Void</h3>
-                        <p>Tetris in a dark matter universe. Arrow keys to move, Up to rotate.</p>
-                        <div class="tags">
-                            <span class="tag">Puzzle</span>
-                            <span class="tag">Canvas</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Game Modal Container -->
-    <div id="gameModal" class="game-modal" style="display:none;">
-        <div class="game-modal-inner">
-            <div class="game-modal-header">
-                <h3 id="gameTitle">Game</h3>
-                <button class="game-close-btn" id="gameClose">&times;</button>
-            </div>
-            <div class="game-canvas-wrap">
-                <canvas id="gameCanvas"></canvas>
-            </div>
-            <div class="game-score">Score: <span id="gameScore">0</span></div>
-            <div class="game-controls-mobile" id="mobileControls" style="display:none;">
-                <button class="ctrl-btn" data-dir="up">&#9650;</button>
-                <div class="ctrl-row">
-                    <button class="ctrl-btn" data-dir="left">&#9664;</button>
-                    <button class="ctrl-btn" data-dir="down">&#9660;</button>
-                    <button class="ctrl-btn" data-dir="right">&#9654;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script type="module" src="/src/pages/games.ts"></script>
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Playground | Alogo</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript
+      >This portfolio needs JavaScript. Explore my work at
+      <a href="https://github.com/AM4517UMOR4NG">GitHub</a>.</noscript
+    >
     <script type="module" src="/src/main.ts"></script>
-</body>
-
+  </body>
 </html>

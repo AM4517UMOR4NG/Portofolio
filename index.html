@@ -1,152 +1,28 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of a Creative Developer">
-    <meta name="theme-color" content="#050505">
-    <meta name="robots" content="index, follow">
-    <title>Portfolio | Welcome</title>
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A.M. Alogo Situmorang - full-stack developer. Explore projects, open-source code, and experiments with Java, Spring Boot, Laravel, and TypeScript."
+    />
+    <meta name="theme-color" content="#131413" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/src/styles/landing.css">
-</head>
-
-<body>
-    <div class="container">
-        <button class="explore-btn" id="exploreBtn">Click here to explore</button>
-
-        <div class="flow-content" id="flowContent">
-            <svg class="svg-layer" id="svgLayer"></svg>
-            <div class="mode-indicator" id="modeIndicator">CIRCUIT MODE</div>
-
-            <div class="nav-label" id="label-projects"><a href="projects.html">Projects</a></div>
-            <div class="nav-label" id="label-repos"><a href="repos.html">Repositories</a></div>
-            <div class="nav-label" id="label-contact"><a href="contact.html">Contact</a></div>
-            <div class="nav-label" id="label-about"><a href="about.html">About</a></div>
-
-            <div class="color-palette">
-                <div class="palette-label">CURVE</div>
-                <div class="palette-controls">
-                    <div class="control-item">
-                        <div class="color-dot red" title="Circuit Board"></div>
-                        <span>CIRCUIT</span>
-                    </div>
-                    <div class="control-item">
-                        <div class="color-dot yellow" title="Direct Line"></div>
-                        <span>DIRECT</span>
-                    </div>
-                    <div class="control-item">
-                        <div class="color-dot green" title="Organic Curve"></div>
-                        <span>CURVE</span>
-                    </div>
-                    <div class="control-item">
-                        <div class="color-dot cyan" title="System Glitch"></div>
-                        <span>GLITCH</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- INTRO ARROW OVERLAY -->
-    <div class="intro-overlay" id="introOverlay">
-        <!-- Corner Decorations -->
-        <div class="intro-corner tl"></div>
-        <div class="intro-corner tr"></div>
-        <div class="intro-corner bl"></div>
-        <div class="intro-corner br"></div>
-
-        <!-- Pulse Rings -->
-        <div class="intro-pulse"></div>
-        <div class="intro-pulse p2"></div>
-        <div class="intro-pulse p3"></div>
-
-        <!-- Floating Particles -->
-        <div class="float-particle"></div>
-        <div class="float-particle"></div>
-        <div class="float-particle"></div>
-        <div class="float-particle"></div>
-
-        <!-- Main Content -->
-        <div class="intro-content">
-            <div class="intro-text">Click one of them to know more about me</div>
-
-            <div class="intro-arrow-container">
-                <svg class="intro-arrow-svg" viewBox="0 0 500 60" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                        <linearGradient id="introGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#00f3ff;stop-opacity:0.5" />
-                            <stop offset="50%" style="stop-color:#00f3ff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#00f3ff;stop-opacity:1" />
-                        </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                            <feMerge>
-                                <feMergeNode in="coloredBlur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <!-- Energy Particles -->
-                    <circle class="arrow-particle" cx="30" cy="30" r="4" />
-                    <circle class="arrow-particle" cx="30" cy="30" r="3" />
-                    <circle class="arrow-particle" cx="30" cy="30" r="2" />
-                    <!-- Main Line -->
-                    <path class="intro-arrow-line" d="M 30 30 L 460 30" filter="url(#glow)" />
-                    <!-- Arrow Head REMOVED as requested -->
-                </svg>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cursor Canvas -->
-    <canvas id="cursorCanvas"
-        style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 9999;"></canvas>
-
-    <!-- MOBILE MENU (Visible only on phone) -->
-    <div class="mobile-menu">
-        <div class="mobile-header">
-            <div class="mobile-logo">PORTFOLIO</div>
-            <div class="mobile-subtitle">SYSTEM ONLINE</div>
-        </div>
-
-        <div class="mobile-nav-grid">
-            <a href="projects.html" class="mobile-card red">
-                <div class="card-icon">📂</div>
-                <div class="card-text">PROJECTS</div>
-                <div class="card-arrow">➝</div>
-            </a>
-            <a href="repos.html" class="mobile-card yellow">
-                <div class="card-icon">💾</div>
-                <div class="card-text">REPOSITORIES</div>
-                <div class="card-arrow">➝</div>
-            </a>
-            <a href="contact.html" class="mobile-card green">
-                <div class="card-icon">💬</div>
-                <div class="card-text">CONTACT</div>
-                <div class="card-arrow">➝</div>
-            </a>
-            <a href="about.html" class="mobile-card cyan">
-                <div class="card-icon">👤</div>
-                <div class="card-text">ABOUT</div>
-                <div class="card-arrow">➝</div>
-            </a>
-        </div>
-
-        <div class="mobile-footer">v2.0.24 CYBER-CORE</div>
-    </div>
-    <div class="page-transition-overlay">
-        <div class="cyber-slash"></div>
-    </div>
-
-    <script type="module" src="/src/pages/landing.ts"></script>
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Alogo Situmorang - Developer & Builder | Alogo</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript
+      >This portfolio needs JavaScript. Explore my work at
+      <a href="https://github.com/AM4517UMOR4NG">GitHub</a>.</noscript
+    >
     <script type="module" src="/src/main.ts"></script>
-</body>
-
+  </body>
 </html>
